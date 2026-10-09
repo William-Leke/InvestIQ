@@ -222,7 +222,7 @@ export function Settings({ onClose }: { onClose: () => void }) {
           </Section>
 
           <Section title="Theme presets" caption={`Starting points for ${MODE_LABEL[mode]}. Fine-tune any color below.`}>
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-5">
               {PRESETS[mode].map(([name, p], i) => {
                 const pal = p ?? DEFAULTS[mode];
                 const on = i === current;

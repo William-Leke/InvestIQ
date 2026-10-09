@@ -23,7 +23,7 @@ describe("appearance tokens", () => {
     expect(resolvePalette(bad, "dark").accent).toBe(DEFAULTS.dark.accent);
   });
 
-  it("drops an override that equals the default, so the Default preset stays selected", () => {
+  it("drops an override that equals the default, so the Trendsight preset stays selected", () => {
     let a = withColor(defaultAppearance(), "dark", "up", "#00ff00");
     expect(activePreset(a, "dark")).toBe(-1);
     a = withColor(a, "dark", "up", DEFAULTS.dark.up);

@@ -1,4 +1,4 @@
-// Response shapes copied from FMP "stable" and SEC EDGAR APIs, trimmed to the fields InvestIQ reads.
+// Response shapes copied from FMP "stable" and SEC EDGAR APIs, trimmed to the fields Trendsight reads.
 export const fmpQuote = [
   {
     symbol: "AAPL",

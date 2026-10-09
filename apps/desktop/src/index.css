@@ -6,19 +6,19 @@
  * the dark defaults so the first frame paints correctly before React runs.
  */
 :root {
-  --iq-bg: #020617;
-  --iq-panel: #0b1222;
-  --iq-cell: #0f172a;
-  --iq-line: #1e293b;
-  --iq-line-2: #4a5466;
-  --iq-fg: #f1f5f9;
-  --iq-soft: #c8d0dc;
-  --iq-muted: #94a3b8;
-  --iq-faint: #64748b;
-  --iq-accent: #38bdf8;
+  --iq-bg: #0c0c0d;
+  --iq-panel: #131315;
+  --iq-cell: #1a1a1d;
+  --iq-line: #27272c;
+  --iq-line-2: #505054;
+  --iq-fg: #f2f2f4;
+  --iq-soft: #ceced5;
+  --iq-muted: #a3a3ae;
+  --iq-faint: #71717c;
+  --iq-accent: #8ab6ea;
   --iq-on-accent: #0b0f19;
-  --iq-up: #34d399;
-  --iq-down: #fb7185;
+  --iq-up: #7fd6c8;
+  --iq-down: #e07fae;
   --iq-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --iq-display: var(--iq-sans);
   --iq-mono: var(--iq-sans);
@@ -71,4 +71,23 @@ body {
 
 input[type="range"] {
   accent-color: var(--iq-accent);
+}
+
+/* Trendsight wordmark: the logo's thin, widely spaced capitals. Letter colors come
+   from the brand gradient in Wordmark.tsx, not the editable palette. */
+.wordmark {
+  font-family: "Montserrat", var(--iq-sans);
+  font-weight: 300;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+[data-mode="light"] .wordmark {
+  font-weight: 400;
+}
+/* Flipping the glyph would move its letter spacing to the left, so swap it for a margin. */
+.wordmark .mirror {
+  display: inline-block;
+  transform: scaleX(-1);
+  letter-spacing: 0;
+  margin-right: 0.22em;
 }

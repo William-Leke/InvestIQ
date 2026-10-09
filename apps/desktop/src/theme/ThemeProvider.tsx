@@ -11,7 +11,7 @@ import {
   sanitize,
 } from "./tokens";
 
-const STORAGE_KEY = "investiq.appearance";
+const STORAGE_KEY = "trendsight.appearance";
 
 interface ThemeValue {
   appearance: Appearance;

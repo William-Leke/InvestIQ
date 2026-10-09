@@ -1,4 +1,4 @@
-# InvestIQ
+# Trendsight
 
 Desktop stock research for paying subscribers: live quote, TradingView chart, company profile, ten years of financial statements with charts, and SEC filings.
 
@@ -21,7 +21,7 @@ Prerequisites: Node 22+, pnpm 10, Rust (stable), and the [Tauri system dependenc
 pnpm install
 cp apps/server/.env.example apps/server/.env      # add FMP_API_KEY and a real SEC_USER_AGENT
 pnpm dev:server                                   # http://localhost:8787
-pnpm dev:desktop                                  # opens the InvestIQ window
+pnpm dev:desktop                                  # opens the Trendsight window
 ```
 
 `pnpm dev:web` runs the same interface in a browser at http://localhost:1420 if you don't need the desktop shell.
@@ -30,10 +30,13 @@ With `AUTH_MODE=dev` (the default in `.env.example`) the service skips sign-in a
 
 ## Appearance
 
+The default theme follows the Trendsight logo: near-black surfaces with the logo's teal, blue, violet and pink gradient as accents. The header wordmark (`apps/desktop/src/components/Wordmark.tsx`) draws the logo in Montserrat Light with the mirrored E, and the app name lives in `APP_NAME` there.
+
+
 The palette button in the header opens **Appearance**, where each user can:
 
 - switch between dark, light, or following the system, also available as the header's Light mode switch
-- start from a preset (dark: Default, Midnight, Amber terminal, High contrast; light: Default, Paper, Graphite, High contrast)
+- start from a preset (dark: Trendsight, Ocean, Midnight, Amber terminal, High contrast; light: Trendsight, Ocean, Paper, Graphite, High contrast)
 - change any of the ten interface colors, kept separately for dark and light mode, with a contrast check on each text and market color
 - choose body, heading/price and ticker fonts, the interface size, and corner roundness
 
@@ -54,7 +57,7 @@ Changes apply instantly with a live preview and are saved on that computer (`loc
 
 Serving vendor data to paying users requires FMP's commercial redistribution license, not a personal plan. Get that in writing before the first subscriber.
 
-The desktop window's Content Security Policy (`apps/desktop/src-tauri/tauri.conf.json`) allows the API at `http://localhost:8787` and `https://api.investiq.app`; change the latter to the real production host when the service is deployed.
+The desktop window's Content Security Policy (`apps/desktop/src-tauri/tauri.conf.json`) allows the API at `http://localhost:8787` and `https://api.trendsight.app`; change the latter to the real production host when the service is deployed.
 
 ## Tests
 

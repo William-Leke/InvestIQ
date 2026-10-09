@@ -9,7 +9,7 @@ export function AccessGate({ error }: { error: ApiError }) {
 
   if (error.status === 401) {
     return (
-      <Panel title="Sign in to InvestIQ">
+      <Panel title="Sign in to Trendsight">
         <p>Your session has ended or you haven't signed in yet.</p>
         <p className="text-xs text-faint">Desktop sign-in arrives with the Clerk setup; locally, run the service with AUTH_MODE=dev.</p>
       </Panel>
@@ -32,7 +32,7 @@ export function AccessGate({ error }: { error: ApiError }) {
 
   return (
     <Panel title="Subscribe to keep researching">
-      <p>Prices, financials and filings are part of the InvestIQ subscription.</p>
+      <p>Prices, financials and filings are part of the Trendsight subscription.</p>
       <button onClick={subscribe} disabled={busy} className="rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-on-accent hover:brightness-110 disabled:opacity-50">
         {busy ? "Opening checkout…" : "Start subscription"}
       </button>

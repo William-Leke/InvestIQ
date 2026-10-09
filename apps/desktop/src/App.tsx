@@ -7,6 +7,7 @@ import { QuoteHeader } from "./components/QuoteHeader";
 import { Settings } from "./components/Settings";
 import { SearchBar } from "./components/SearchBar";
 import { ErrorNote, Loading } from "./components/Status";
+import { Wordmark } from "./components/Wordmark";
 import { ThemeSwitch } from "./components/ThemeSwitch";
 import { TradingViewChart } from "./components/TradingViewChart";
 import { type ApiError, useApi } from "./lib/api";
@@ -31,9 +32,7 @@ export default function App() {
   return (
     <div className="flex h-full flex-col">
       <header className="flex items-center gap-6 border-b border-line px-6 py-3">
-        <div className="font-display text-lg font-bold tracking-tight">
-          Invest<span className="text-accent">IQ</span>
-        </div>
+        <Wordmark className="text-lg" />
         <SearchBar
           onSelect={(s) => {
             setSymbol(s);
@@ -101,7 +100,7 @@ export default function App() {
             {tab === "SEC filings" && <Filings symbol={symbol} />}
 
             <footer className="pt-4 text-xs text-faint">
-              Market data from Financial Modeling Prep, filings from SEC EDGAR. Prices may be delayed. InvestIQ is a research tool, not investment advice.
+              Market data from Financial Modeling Prep, filings from SEC EDGAR. Prices may be delayed. Trendsight is a research tool, not investment advice.
             </footer>
           </div>
         )}

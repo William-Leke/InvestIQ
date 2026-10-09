@@ -49,7 +49,7 @@ export function requireSubscription(config: Config, store: SubscriptionStore) {
   return async (req: FastifyRequest, _reply: FastifyReply) => {
     if (config.authMode === "dev") return;
     if (!isActive(store.get(req.userId))) {
-      throw new HttpError(402, "An active InvestIQ subscription is required");
+      throw new HttpError(402, "An active Trendsight subscription is required");
     }
   };
 }

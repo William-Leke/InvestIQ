@@ -4,7 +4,7 @@ import type { Config } from "./config.js";
 import type { SubscriptionStore } from "./db.js";
 import { HttpError } from "./errors.js";
 
-/** The slice of Stripe InvestIQ uses, so tests can substitute a fake. */
+/** The slice of Stripe Trendsight uses, so tests can substitute a fake. */
 export interface BillingGateway {
   createCheckout(userId: string, customerId: string | null): Promise<string>;
   createPortal(customerId: string): Promise<string>;
