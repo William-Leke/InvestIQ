@@ -52,24 +52,24 @@ export function SearchBar({ onSelect }: { onSelect: (symbol: string) => void }) 
           }
         }}
         placeholder="Search a company or ticker, e.g. Apple or AAPL"
-        className="w-full rounded-lg border border-slate-700 bg-slate-900 px-4 py-2 text-sm outline-none placeholder:text-slate-500 focus:border-sky-500"
+        className="w-full rounded-lg border border-line-2 bg-cell px-4 py-2 text-sm outline-none placeholder:text-faint focus:border-accent"
         aria-label="Search companies"
       />
       {open && text.trim() && (
-        <ul className="absolute z-20 mt-1 max-h-80 w-full overflow-auto rounded-lg border border-slate-700 bg-slate-900 py-1 text-sm shadow-xl">
-          {loading && results.length === 0 && <li className="px-4 py-2 text-slate-500">Searching…</li>}
-          {!loading && results.length === 0 && query && <li className="px-4 py-2 text-slate-500">No matches. Press Enter to open "{text.trim().toUpperCase()}".</li>}
+        <ul className="absolute z-20 mt-1 max-h-80 w-full overflow-auto rounded-lg border border-line-2 bg-cell py-1 text-sm shadow-xl">
+          {loading && results.length === 0 && <li className="px-4 py-2 text-faint">Searching…</li>}
+          {!loading && results.length === 0 && query && <li className="px-4 py-2 text-faint">No matches. Press Enter to open "{text.trim().toUpperCase()}".</li>}
           {results.map((r, i) => (
             <li key={`${r.symbol}-${r.exchange}`}>
               <button
                 onMouseDown={(e) => e.preventDefault()}
                 onClick={() => choose(r.symbol)}
                 onMouseEnter={() => setActive(i)}
-                className={`flex w-full items-center gap-3 px-4 py-2 text-left ${i === active ? "bg-slate-800" : ""}`}
+                className={`flex w-full items-center gap-3 px-4 py-2 text-left ${i === active ? "bg-cell" : ""}`}
               >
-                <span className="w-20 font-semibold text-sky-400">{r.symbol}</span>
+                <span className="w-20 font-mono font-semibold text-accent">{r.symbol}</span>
                 <span className="flex-1 truncate">{r.name}</span>
-                <span className="text-xs text-slate-500">{r.exchange}</span>
+                <span className="text-xs text-faint">{r.exchange}</span>
               </button>
             </li>
           ))}

@@ -1,32 +1,50 @@
 import { useMemo } from "react";
 import { compact, compactMoney, ratio } from "../lib/format";
 import type { Financials as FinancialsData } from "../lib/types";
+import { useTheme } from "../theme/ThemeProvider";
+import type { Palette } from "../theme/tokens";
 import { type ChartOption, EChart } from "./EChart";
-
-const PALETTE = ["#38bdf8", "#a78bfa", "#34d399", "#fbbf24", "#f87171"];
-const AXIS = { axisLine: { lineStyle: { color: "#334155" } }, axisLabel: { color: "#94a3b8" }, splitLine: { lineStyle: { color: "#1e293b" } } };
 
 type Series = { name: string; data: (number | null)[]; type?: "bar" | "line" };
 
-function chartOption(years: string[], series: Series[], format: (v: number) => string, axisFormat = format): ChartOption {
+/** Series colors follow the theme: accent leads, then a fixed violet and amber, then gains. */
+function seriesColors(p: Palette) {
+  return [p.accent, "#a78bfa", p.up, "#f59e0b", p.down];
+}
+
+function chartOption(
+  p: Palette,
+  years: string[],
+  series: Series[],
+  format: (v: number) => string,
+  axisFormat = format,
+): ChartOption {
+  const axis = {
+    axisLine: { lineStyle: { color: p.line } },
+    axisLabel: { color: p.muted },
+    splitLine: { lineStyle: { color: p.line } },
+  };
   return {
-    color: PALETTE,
+    color: seriesColors(p),
     grid: { left: 64, right: 16, top: 36, bottom: 28 },
-    legend: { top: 0, textStyle: { color: "#cbd5e1" } },
+    legend: { top: 0, textStyle: { color: p.muted } },
     tooltip: {
       trigger: "axis",
+      backgroundColor: p.cell,
+      borderColor: p.line,
+      textStyle: { color: p.fg },
       valueFormatter: (v: unknown) => (typeof v === "number" ? format(v) : "—"),
     },
-    xAxis: { type: "category", data: years, ...AXIS },
-    yAxis: { type: "value", ...AXIS, axisLabel: { ...AXIS.axisLabel, formatter: axisFormat } },
+    xAxis: { type: "category", data: years, ...axis },
+    yAxis: { type: "value", ...axis, axisLabel: { ...axis.axisLabel, formatter: axisFormat } },
     series: series.map((s) => ({ name: s.name, type: s.type ?? "bar", data: s.data, connectNulls: true, smooth: false, barMaxWidth: 28 })),
   };
 }
 
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-lg border border-slate-800 bg-slate-900/50 p-4">
-      <h3 className="mb-2 text-sm font-semibold text-slate-300">{title}</h3>
+    <div className="rounded-lg border border-line bg-panel p-4">
+      <h3 className="mb-2 text-sm font-semibold text-soft">{title}</h3>
       {children}
     </div>
   );
@@ -34,6 +52,7 @@ function Card({ title, children }: { title: string; children: React.ReactNode })
 
 export function Financials({ data }: { data: FinancialsData }) {
   const { years, income, balance, cashflow } = data;
+  const { palette } = useTheme();
   const pct = (v: number) => `${v.toFixed(1)}%`;
   const pctAxis = (v: number) => `${v.toFixed(0)}%`;
   const moneyAxis = (v: number) => compactMoney(v, 0);
@@ -41,6 +60,7 @@ export function Financials({ data }: { data: FinancialsData }) {
   const charts = useMemo(
     () => ({
       revenue: chartOption(
+        palette,
         years,
         [
           { name: "Revenue", data: income.revenue },
@@ -50,6 +70,7 @@ export function Financials({ data }: { data: FinancialsData }) {
         moneyAxis,
       ),
       margins: chartOption(
+        palette,
         years,
         [
           { name: "Gross margin", data: ratio(income.grossProfit, income.revenue), type: "line" },
@@ -60,6 +81,7 @@ export function Financials({ data }: { data: FinancialsData }) {
         pctAxis,
       ),
       cash: chartOption(
+        palette,
         years,
         [
           { name: "Operating cash flow", data: cashflow.operatingCashFlow },
@@ -69,6 +91,7 @@ export function Financials({ data }: { data: FinancialsData }) {
         moneyAxis,
       ),
       balance: chartOption(
+        palette,
         years,
         [
           { name: "Cash", data: balance.cash },
@@ -78,9 +101,9 @@ export function Financials({ data }: { data: FinancialsData }) {
         compactMoney,
         moneyAxis,
       ),
-      eps: chartOption(years, [{ name: "Diluted EPS", data: income.eps }], (v) => `$${v.toFixed(2)}`),
+      eps: chartOption(palette, years, [{ name: "Diluted EPS", data: income.eps }], (v) => `$${v.toFixed(2)}`),
     }),
-    [years, income, balance, cashflow],
+    [palette, years, income, balance, cashflow],
   );
 
   const rows: [string, (number | null)[], (v: number | null) => string][] = [
@@ -122,7 +145,7 @@ export function Financials({ data }: { data: FinancialsData }) {
         <div className="overflow-x-auto">
           <table className="w-full text-sm tabular-nums">
             <thead>
-              <tr className="text-slate-500">
+              <tr className="text-faint">
                 <th className="py-2 pr-4 text-left font-medium">Metric</th>
                 {years.map((y) => (
                   <th key={y} className="px-3 py-2 text-right font-medium">
@@ -133,10 +156,10 @@ export function Financials({ data }: { data: FinancialsData }) {
             </thead>
             <tbody>
               {rows.map(([label, values, fmt]) => (
-                <tr key={label} className="border-t border-slate-800">
-                  <td className="py-2 pr-4 text-slate-300">{label}</td>
+                <tr key={label} className="border-t border-line">
+                  <td className="py-2 pr-4 text-soft">{label}</td>
                   {values.map((v, i) => (
-                    <td key={years[i]} className={`px-3 py-2 text-right ${v !== null && v < 0 ? "text-rose-400" : ""}`}>
+                    <td key={years[i]} className={`px-3 py-2 text-right ${v !== null && v < 0 ? "text-down" : ""}`}>
                       {fmt(v)}
                     </td>
                   ))}
@@ -145,7 +168,7 @@ export function Financials({ data }: { data: FinancialsData }) {
             </tbody>
           </table>
         </div>
-        <p className="mt-2 text-xs text-slate-500">Figures in {data.currency}; {compact(1e9, 0)} = one billion.</p>
+        <p className="mt-2 text-xs text-faint">Figures in {data.currency}; {compact(1e9, 0)} = one billion.</p>
       </Card>
     </div>
   );

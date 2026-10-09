@@ -32,7 +32,7 @@ function fakeFetch() {
   return { impl: impl as unknown as typeof fetch, calls };
 }
 
-const baseEnv = { FMP_API_KEY: "test-key", SEC_USER_AGENT: "InvestIQ test@example.com", DB_PATH: ":memory:" };
+const baseEnv = { FMP_API_KEY: "test-key", SEC_USER_AGENT: "Trendsight test@example.com", DB_PATH: ":memory:" };
 
 async function devApp(env: Record<string, string> = {}) {
   const f = fakeFetch();
@@ -78,7 +78,7 @@ describe("market data (dev mode)", () => {
     ]);
     const secCalls = f.calls.filter((c) => c.url.includes("sec.gov"));
     expect(secCalls.length).toBe(2);
-    for (const c of secCalls) expect(c.headers["User-Agent"]).toBe("InvestIQ test@example.com");
+    for (const c of secCalls) expect(c.headers["User-Agent"]).toBe("Trendsight test@example.com");
   });
 
   it("rejects malformed tickers and unknown SEC registrants", async () => {

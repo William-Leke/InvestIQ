@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { openExternal } from "../lib/open";
+import { useTheme } from "../theme/ThemeProvider";
 
 const TV_EXCHANGES: Record<string, string> = { NASDAQ: "NASDAQ", NYSE: "NYSE", AMEX: "AMEX", NYSEARCA: "AMEX" };
 
@@ -9,6 +10,7 @@ const TV_EXCHANGES: Record<string, string> = { NASDAQ: "NASDAQ", NYSE: "NYSE", A
  */
 export function TradingViewChart({ symbol, exchange }: { symbol: string; exchange: string }) {
   const ref = useRef<HTMLDivElement>(null);
+  const { mode, palette } = useTheme();
 
   useEffect(() => {
     const host = ref.current;
@@ -28,7 +30,9 @@ export function TradingViewChart({ symbol, exchange }: { symbol: string; exchang
       symbol: prefix ? `${prefix}:${symbol}` : symbol,
       interval: "D",
       timezone: "America/New_York",
-      theme: "dark",
+      theme: mode,
+      backgroundColor: palette.panel,
+      gridColor: palette.line,
       style: "1",
       locale: "en",
       allow_symbol_change: false,
@@ -39,12 +43,12 @@ export function TradingViewChart({ symbol, exchange }: { symbol: string; exchang
     return () => {
       host.innerHTML = "";
     };
-  }, [symbol, exchange]);
+  }, [symbol, exchange, mode, palette.panel, palette.line]);
 
   return (
-    <div className="flex h-[520px] flex-col overflow-hidden rounded-lg border border-slate-800">
+    <div className="flex h-[520px] flex-col overflow-hidden rounded-lg border border-line">
       <div ref={ref} className="tradingview-widget-container min-h-0 flex-1" />
-      <div className="border-t border-slate-800 px-3 py-1 text-right text-xs text-slate-500">
+      <div className="border-t border-line px-3 py-1 text-right text-xs text-faint">
         <a
           href="https://www.tradingview.com/"
           onClick={(e) => {
@@ -52,7 +56,7 @@ export function TradingViewChart({ symbol, exchange }: { symbol: string; exchang
             void openExternal("https://www.tradingview.com/");
           }}
           rel="noopener nofollow"
-          className="hover:text-sky-400"
+          className="hover:text-accent"
         >
           Chart by TradingView
         </a>

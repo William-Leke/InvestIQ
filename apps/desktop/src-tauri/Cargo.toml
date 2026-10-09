@@ -1,11 +1,11 @@
 [package]
-name = "investiq"
+name = "trendsight"
 version = "0.1.0"
-description = "InvestIQ stock research"
+description = "Trendsight stock research"
 edition = "2021"
 
 [lib]
-name = "investiq_lib"
+name = "trendsight_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]

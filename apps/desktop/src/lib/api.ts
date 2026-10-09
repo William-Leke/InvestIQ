@@ -22,7 +22,7 @@ export async function api<T>(path: string, init: RequestInit = {}): Promise<T> {
   try {
     res = await fetch(`${BASE}${path}`, { ...init, headers });
   } catch {
-    throw new ApiError(0, "Can't reach the InvestIQ service. Check your connection.");
+    throw new ApiError(0, "Can't reach the Trendsight service. Check your connection.");
   }
   if (!res.ok) {
     const body = (await res.json().catch(() => ({}))) as { error?: string };

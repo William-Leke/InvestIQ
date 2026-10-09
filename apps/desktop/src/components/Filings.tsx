@@ -24,7 +24,7 @@ export function Filings({ symbol }: { symbol: string }) {
           <button
             key={f.label}
             onClick={() => setFilter(f)}
-            className={`rounded-full border px-3 py-1 text-xs ${f === filter ? "border-sky-500 bg-sky-500/10 text-sky-300" : "border-slate-700 text-slate-400 hover:border-slate-500"}`}
+            className={`rounded-full border px-3 py-1 text-xs ${f === filter ? "border-accent bg-accent/10 text-accent" : "border-line-2 text-muted hover:border-faint"}`}
           >
             {f.label}
           </button>
@@ -32,11 +32,11 @@ export function Filings({ symbol }: { symbol: string }) {
       </div>
       {loading && <Loading what="SEC filings" />}
       {error && <ErrorNote error={error} />}
-      {data && data.length === 0 && <p className="text-sm text-slate-500">No recent filings of this type.</p>}
+      {data && data.length === 0 && <p className="text-sm text-faint">No recent filings of this type.</p>}
       {data && data.length > 0 && (
         <table className="w-full text-sm">
           <thead>
-            <tr className="text-left text-slate-500">
+            <tr className="text-left text-faint">
               <th className="py-2 font-medium">Form</th>
               <th className="py-2 font-medium">Description</th>
               <th className="py-2 font-medium">Period</th>
@@ -48,19 +48,19 @@ export function Filings({ symbol }: { symbol: string }) {
               <tr
                 key={f.accessionNumber}
                 onClick={() => void openExternal(f.url)}
-                className="cursor-pointer border-t border-slate-800 hover:bg-slate-900"
+                className="cursor-pointer border-t border-line hover:bg-cell"
                 title="Open on sec.gov"
               >
-                <td className="py-2 pr-4 font-semibold text-sky-400">{f.form}</td>
+                <td className="py-2 pr-4 font-mono font-semibold text-accent">{f.form}</td>
                 <td className="py-2 pr-4">{f.description}</td>
-                <td className="py-2 pr-4 tabular-nums text-slate-400">{f.reportDate || "—"}</td>
-                <td className="py-2 tabular-nums text-slate-400">{f.filingDate}</td>
+                <td className="py-2 pr-4 tabular-nums text-muted">{f.reportDate || "—"}</td>
+                <td className="py-2 tabular-nums text-muted">{f.filingDate}</td>
               </tr>
             ))}
           </tbody>
         </table>
       )}
-      <p className="text-xs text-slate-500">Source: SEC EDGAR. Filings open on sec.gov in your browser.</p>
+      <p className="text-xs text-faint">Source: SEC EDGAR. Filings open on sec.gov in your browser.</p>
     </div>
   );
 }
