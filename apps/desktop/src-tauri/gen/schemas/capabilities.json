@@ -1,0 +1,1 @@
+{"default":{"identifier":"default","description":"Main window: core APIs plus opening links (SEC filings, checkout) in the default browser.","local":true,"windows":["main"],"permissions":["core:default","opener:default"]}}
