@@ -28,6 +28,17 @@ pnpm dev:desktop                                  # opens the InvestIQ window
 
 With `AUTH_MODE=dev` (the default in `.env.example`) the service skips sign-in and subscription checks. Never deploy that way.
 
+## Appearance
+
+The palette button in the header opens **Appearance**, where each user can:
+
+- switch between dark, light, or following the system, also available as the header's Light mode switch
+- start from a preset (dark: Default, Midnight, Amber terminal, High contrast; light: Default, Paper, Graphite, High contrast)
+- change any of the ten interface colors, kept separately for dark and light mode, with a contrast check on each text and market color
+- choose body, heading/price and ticker fonts, the interface size, and corner roundness
+
+Changes apply instantly with a live preview and are saved on that computer (`localStorage`). The TradingView chart and the financial charts follow the theme. Colors live in `apps/desktop/src/theme/tokens.ts` and reach Tailwind as `--iq-*` CSS variables (`bg-panel`, `text-muted`, `text-up` and so on), so new components should use those classes rather than fixed palette colors. Fonts load from Google Fonts, which the window's CSP allows.
+
 ## Sign-in and billing
 
 - **Sign-in:** the service verifies [Clerk](https://clerk.com) session tokens (`AUTH_MODE=clerk`, `CLERK_ISSUER`, `CLERK_JWKS_URL`). The desktop sign-in screen is still a placeholder; wiring Clerk's sign-in into the Tauri window needs a Clerk account.

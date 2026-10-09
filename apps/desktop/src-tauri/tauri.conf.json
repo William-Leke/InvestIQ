@@ -21,7 +21,7 @@
       }
     ],
     "security": {
-      "csp": "default-src 'self'; script-src 'self' https://s3.tradingview.com; frame-src https://*.tradingview.com https://www.tradingview-widget.com https://*.tradingview-widget.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; connect-src 'self' ipc: http://ipc.localhost http://localhost:8787 https://api.investiq.app"
+      "csp": "default-src 'self'; script-src 'self' https://s3.tradingview.com; frame-src https://*.tradingview.com https://www.tradingview-widget.com https://*.tradingview-widget.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' ipc: http://ipc.localhost http://localhost:8787 https://api.investiq.app"
     }
   },
   "bundle": {
